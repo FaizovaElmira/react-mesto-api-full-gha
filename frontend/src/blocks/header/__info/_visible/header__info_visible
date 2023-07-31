@@ -1,0 +1,15 @@
+.header__info_visible {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  color: #ffffff;
+  background-color: #333333;
+  padding: 16px;
+  border-radius: 8px;
+}

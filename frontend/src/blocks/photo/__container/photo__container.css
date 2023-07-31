@@ -1,0 +1,25 @@
+.photo__container {
+  max-width: 880px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px 17px;
+  padding: 0;
+  list-style: none;
+}
+
+@media (max-width: 1023px) {
+  .photo__container {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 581px;
+  }
+}
+
+@media (max-width: 767px) {
+  .photo__container {
+    grid-template-columns: 1fr;
+    max-width: 282px;
+    margin: 0 auto;
+    gap: 20px 0;
+  }
+}

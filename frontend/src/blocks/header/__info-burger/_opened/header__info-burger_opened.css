@@ -1,0 +1,16 @@
+.header__info-burger_opened {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: #ffffff;
+  display: flex;
+  gap: 24px;
+  transition: all 0.2s linear;
+}
+
+@media screen and (min-width: 767px) {
+  .header__info-burger_opened {
+    display: none;
+  }
+}

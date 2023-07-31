@@ -1,0 +1,7 @@
+.photo__item {
+  display: flex;
+  flex-direction: column;
+  background-size: cover;
+  position: relative;
+  cursor: pointer;
+}

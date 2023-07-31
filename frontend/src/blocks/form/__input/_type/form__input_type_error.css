@@ -1,0 +1,6 @@
+.form__input_type_error,
+.form__input_type_error:focus {
+  border-bottom: 1px solid rgb(255, 0, 0, 1);
+  outline-color: red;
+  margin: 0;
+}

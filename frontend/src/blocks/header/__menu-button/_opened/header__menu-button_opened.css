@@ -1,0 +1,4 @@
+.header__menu-button_opened {
+  color: #ffffff;
+  background-image: url(../../../../images/menu-button-close.svg);
+}

@@ -1,0 +1,9 @@
+.header__info-burger {
+  padding: 40px 0 40px 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  border-bottom: 1px solid rgba(54, 54, 54, 0.7);
+  box-sizing: border-box;
+}

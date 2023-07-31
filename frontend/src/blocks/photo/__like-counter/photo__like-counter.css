@@ -1,0 +1,10 @@
+.photo__like-counter {
+  color: rgba(0, 0, 0, 1);
+  margin: 0;
+  text-align: center;
+  font-family: "Inter", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+}
