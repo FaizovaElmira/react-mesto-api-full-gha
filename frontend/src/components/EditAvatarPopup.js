@@ -2,28 +2,28 @@ import { useRef, useEffect } from "react";
 import useFormAndValidation from "../hooks/useFormAndValidation";
 import PopupWithForm from "./PopupWithForm";
 
-function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, buttonText }) {
+function EditAvatarPopup(props) {
   const avatarRef = useRef();
   const { values, handleChange, errors, isValid, resetForm } =
     useFormAndValidation();
 
   useEffect(() => {
     resetForm();
-  }, [isOpen, resetForm]);
+  }, [props.isOpen, resetForm]);
 
   function handleSubmit(event) {
     event.preventDefault();
-    onUpdateAvatar(values);
+    props.onUpdateAvatar(values);
   }
 
   return (
     <PopupWithForm
       title="Обновить аватар"
       name="edit-avatar"
-      isOpen={isOpen}
-      onClose={onClose}
+      isOpen={props.isOpen}
+      onClose={props.onClose}
       onSubmit={handleSubmit}
-      buttonText={buttonText}
+      buttonText={props.buttonText}
       isDisabledSubmitButton={!isValid}
     >
       <input

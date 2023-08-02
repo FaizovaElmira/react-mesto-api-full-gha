@@ -1,11 +1,12 @@
 import { useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function Card({ card, onCardClick, onCardLike, onCardDelete }) {
+function Card(props) {
   const currentUser = useContext(CurrentUserContext);
 
-  const isOwn = card.owner._id === currentUser._id;
-  const isLiked = card.likes.some((item) => item._id === currentUser._id);
+  const isOwn = props.card.owner === currentUser._id;
+
+  const isLiked = props.card.likes.some((i) => i === currentUser._id);
 
   const cardDeleteButtonClassName = `photo__trash ${
     isOwn ? "photo__trash_visible" : ""
@@ -15,16 +16,20 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
   }`;
 
   function handleClick() {
-    onCardClick(card);
+    props.onCardClick(props.card);
   }
 
   function handleLikeClick() {
-    onCardLike(card);
+    props.onCardLike(props.card);
   }
 
   function handleDeleteClick() {
-    onCardDelete(card);
+    props.onCardDelete(props.card);
   }
+
+  // Add console.log statements to check the values
+  console.log("currentUser._id:", currentUser._id);
+  console.log("props.card.owner:", props.card.owner);
 
   return (
     <li className="photo__item">
@@ -38,12 +43,12 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
       )}
       <img
         className="photo__card"
-        src={card.link}
-        alt={card.name}
+        src={props.card.link}
+        alt={props.card.name}
         onClick={handleClick}
       />
       <div className="photo__info">
-        <h2 className="photo__title">{card.name}</h2>
+        <h2 className="photo__title">{props.card.name}</h2>
         <div className="photo__like-container">
           <button
             className={cardLikeButtonClassName}
@@ -51,7 +56,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
             aria-label="Кнопка лайка"
             onClick={handleLikeClick}
           ></button>
-          <span className="photo__like-counter">{card.likes.length}</span>
+          <span className="photo__like-counter">{props.card.likes.length}</span>
         </div>
       </div>
     </li>
@@ -59,3 +64,5 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
 }
 
 export default Card;
+
+

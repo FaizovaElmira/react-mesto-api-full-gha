@@ -45,6 +45,7 @@ function App() {
             setLoggedIn(true);
             navigate("/");
             setEmail(res.data.email);
+            api.setAuthorizationToken(token); // Устанавливаем токен авторизации
           }
         })
         .catch((err) => console.log(err));
@@ -55,10 +56,13 @@ function App() {
     isLoggedIn &&
       Promise.all([api.getUserInfo(), api.getCards()])
         .then(([user, cards]) => {
-          setCurrentUser(user);
-          setCards(cards);
+          const { avatar, name, about, _id } = user.data; 
+          setCurrentUser({ avatar, name, about, _id });
+          setCards(cards.reverse());          
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+        });
   }, [isLoggedIn]);
 
   useEffect(() => {
@@ -105,6 +109,7 @@ function App() {
         setLoggedIn(true);
         setEmail(formValue.email);
         localStorage.setItem("token", res.token);
+        api.setAuthorizationToken(res.token); // Устанавливаем токен авторизации
         navigate("/");
       })
       .catch((err) => {
@@ -178,7 +183,9 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((item) => item._id === currentUser._id);
+    console.log("Owner ID:", card.owner);
+    console.log("currentUser ID:", currentUser._id);
+    const isLiked = card.likes.some((i) => i === currentUser._id);
     api
       .changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
@@ -223,6 +230,7 @@ function App() {
   function handleSignOut() {
     localStorage.removeItem("token");
     setLoggedIn(false);
+    api.setAuthorizationToken(""); // Очистить токен авторизации
     navigate("/sign-in", { replace: true });
   }
 

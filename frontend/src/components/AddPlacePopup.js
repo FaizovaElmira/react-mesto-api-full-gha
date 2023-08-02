@@ -2,18 +2,18 @@ import { useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
 import { useFormAndValidation } from '../hooks/useFormAndValidation';
 
-function AddPlacePopup({ isOpen, onClose, onAddCard, buttonText }) {
+function AddPlacePopup(props) {
   const { values, errors, isValid, handleChange, resetForm } = useFormAndValidation();
 
   useEffect(() => {
-    if (isOpen) {
+    if (props.isOpen) {
       resetForm();
     }
-  }, [isOpen, resetForm]);
+  }, [props.isOpen, resetForm]);
 
   function handleSubmit(event) {
     event.preventDefault();
-    onAddCard({
+    props.onAddCard({
       name: values.title,
       link: values.link,
     });
@@ -23,10 +23,10 @@ function AddPlacePopup({ isOpen, onClose, onAddCard, buttonText }) {
     <PopupWithForm
       title="Новое место"
       name="add"
-      isOpen={isOpen}
-      onClose={onClose}
+      isOpen={props.isOpen}
+      onClose={props.onClose}
       onSubmit={handleSubmit}
-      buttonText={buttonText}
+      buttonText={props.buttonText}
       isDisabledSubmitButton={!isValid}
     >
       <input

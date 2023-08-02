@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Login = ({ handleLogin }) => {
+const Login = (props) => {
   const [formValue, setFormValue] = useState({
     email: "",
     password: "",
@@ -15,7 +15,7 @@ const Login = ({ handleLogin }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    handleLogin(formValue);
+    props.handleLogin(formValue);
   };
 
   return (

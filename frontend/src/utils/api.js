@@ -11,6 +11,11 @@ class Api {
     return Promise.reject(`Ошибка ${res.status}`);
   }
 
+    // Добавляем метод для динамической установки токена авторизации
+    setAuthorizationToken(token) {
+      this.headers.authorization = `Bearer ${token}`;
+    }
+
   getUserInfo() {
     return fetch(`${this.baseUrl}users/me`, {
       method: "GET",
@@ -71,9 +76,8 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-65/",
+  baseUrl: "http://localhost:4000/",
   headers: {
-    authorization: "5d4b4f2c-8537-45c3-b70b-2e2dac143126",
     "Content-Type": "application/json",
   },
 });

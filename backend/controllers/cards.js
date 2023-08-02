@@ -17,8 +17,8 @@ const createCard = async (req, res, next) => {
   const ownerId = req.user._id;
 
   try {
-    const card = await Card.create({ name, link, owner: ownerId });
-    res.status(201).send(card);
+    const cardNew = await Card.create({ name, link, owner: ownerId });
+    res.status(201).send(cardNew);
   } catch (error) {
     next(error);
   }
@@ -26,22 +26,21 @@ const createCard = async (req, res, next) => {
 
 const deleteCard = async (req, res, next) => {
   try {
-    const card = await Card.findById(req.params.cardId);
+    const { cardId } = req.params;
+    const userId = req.user._id;
+
+    const card = await Card.findById(cardId);
     if (!card) {
-      throw new NotFoundError('Карточка с указанным _id не найдена');
+      throw new NotFoundError('Карта с указанным _id не найдена');
     }
 
-    const owner = card.owner.toString();
-    if (req.user._id.toString() === owner) {
-      await Card.deleteOne({ _id: card._id });
-      res.status(200).send({ message: 'Карточка удалена' });
-    } else {
-      throw new ForbiddenError('У вас нет прав для удаления карточки другого пользователя');
+    if (card.owner.toString() !== userId) {
+      throw new ForbiddenError('У вас нет прав на удаление карт других пользователей');
     }
+
+    await Card.deleteOne(card);
+    res.send({ data: card });
   } catch (error) {
-    if (error.name === 'CastError') {
-      throw new BadRequestError('Переданы некорректные данные удаления');
-    }
     next(error);
   }
 };
@@ -51,27 +50,23 @@ const likeCard = async (req, res, next) => {
     const { cardId } = req.params;
     const ownerId = req.user._id;
 
-    try {
-      const card = await Card.findByIdAndUpdate(
-        cardId,
-        { $addToSet: { likes: ownerId } },
-        { new: true },
-      );
+    const card = await Card.findByIdAndUpdate(
+      cardId,
+      { $addToSet: { likes: ownerId } },
+      { new: true },
+    );
 
-      if (!card) {
-        throw new NotFoundError('Передан несуществующий _id карточки');
-      }
-
-      res.status(200).send(card);
-    } catch (error) {
-      if (error.name === 'CastError') {
-        throw new BadRequestError('Переданы некорректные данные для постановки лайка');
-      } else {
-        next(error);
-      }
+    if (!card) {
+      throw new NotFoundError('Передан несуществующий _id карточки');
     }
+
+    res.status(200).send(card);
   } catch (error) {
-    next(error);
+    if (error.name === 'CastError') {
+      throw new BadRequestError('Переданы некорректные данные для постановки лайка');
+    } else {
+      next(error);
+    }
   }
 };
 

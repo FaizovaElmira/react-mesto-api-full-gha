@@ -3,7 +3,7 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import PopupWithForm from "./PopupWithForm";
 import useFormAndValidation from "../hooks/useFormAndValidation";
 
-function EditProfilePopup({ isOpen, onClose, onUpdateUser, buttonText }) {
+function EditProfilePopup(props) {
   const currentUser = useContext(CurrentUserContext);
   const { values, handleChange, errors, isValid, resetForm } =
     useFormAndValidation();
@@ -12,20 +12,20 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, buttonText }) {
     if (currentUser) {
       resetForm(currentUser, {}, true);
     }
-  }, [isOpen, currentUser, resetForm]);
+  }, [props.isOpen, currentUser, resetForm]);
 
   function handleSubmit(event) {
     event.preventDefault();
-    onUpdateUser(values);
+    props.onUpdateUser(values);
   }
 
   return (
     <PopupWithForm
       title="Редактировать профиль"
       name="edit"
-      isOpen={isOpen}
-      onClose={onClose}
-      buttonText={buttonText}
+      isOpen={props.isOpen}
+      onClose={props.onClose}
+      buttonText={props.buttonText}
       onSubmit={handleSubmit}
       isDisabledSubmitButton={!isValid}
     >
@@ -44,7 +44,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, buttonText }) {
         maxLength="40"
       />
       <span
-        className={`form__error ${errors.name ? " form__error_visible" : ""}`}
+        className={`form__error ${errors.name ? "form__error_visible" : ""}`}
       >
         {errors.name}
       </span>
@@ -63,7 +63,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, buttonText }) {
         maxLength="200"
       />
       <span
-        className={`form__error ${errors.about ? " form__error_visible" : ""}`}
+        className={`form__error ${errors.about ? "form__error_visible" : ""}`}
       >
         {errors.about}
       </span>

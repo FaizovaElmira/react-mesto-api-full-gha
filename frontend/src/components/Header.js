@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import headerLogo from "../images/logo.svg";
 import { Link, Routes, Route } from 'react-router-dom';
 
-function Header({ email, onSignOut }) {
+function Header(props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   function handleToggleMenu() {
@@ -11,13 +11,13 @@ function Header({ email, onSignOut }) {
 
   function handleSignOut() {
     setIsMenuOpen(false);
-    onSignOut();
+    props.onSignOut();
   }
 
   return (
     <header className="header">
       <div className={`header__info-burger ${isMenuOpen ? "header__info-burger_opened" : ""}`}>
-        <span className="header__email">{email}</span>
+        <span className="header__email">{props.email}</span>
         <button className="header__button" onClick={handleSignOut}>Выйти</button>
       </div>
       <div className="header__logo-container">
@@ -48,7 +48,7 @@ function Header({ email, onSignOut }) {
                   onClick={handleToggleMenu}
                 ></button>
                 <nav className={`header__info ${isMenuOpen ? "header__info_visible" : ""}`}>
-                  <span className="header__email">{email}</span>
+                  <span className="header__email">{props.email}</span>
                   <button className="header__button" onClick={handleSignOut}>Выйти</button>
                 </nav>
               </>
