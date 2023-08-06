@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 
+const { NODE_ENV, JWT_SECRET } = process.env;
+
 const authMiddleware = (req, res, next) => {
   if (req.url.includes('/signin') || req.url.includes('/signup')) {
     return next();
@@ -12,16 +14,16 @@ const authMiddleware = (req, res, next) => {
     throw new UnauthorizedError('Необходима авторизация');
   }
 
-  const token = authorization.replace('Bearer ', '');
+  const token = authorization.replace('Bearer ', ''); // Extract the token from the header
 
   try {
-    const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret'; // Use JWT_SECRET from environment or default to 'dev-secret'
-    const payload = jwt.verify(token, JWT_SECRET);
-    req.user = payload; // записываем пейлоуд в объект запроса
-    next(); // пропускаем запрос дальше
-    return null; // explicit return after calling next()
+    const secret = NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret';
+    const payload = jwt.verify(token, secret);
+    req.user = payload;
+    next();
+    return null;
   } catch (err) {
-    throw new UnauthorizedError('Необходима авторизация');
+    return next(new UnauthorizedError('Ошибка авторизации: не получилось верифицировать токен'));
   }
 };
 
