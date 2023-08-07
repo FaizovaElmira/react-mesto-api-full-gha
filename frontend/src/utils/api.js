@@ -76,7 +76,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: "http://localhost:4000/",
+  baseUrl: "https://api.faizova.nomoreparties.co/",
   headers: {
     "Content-Type": "application/json",
   },
