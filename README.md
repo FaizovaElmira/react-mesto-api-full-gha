@@ -9,7 +9,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 158.160.115.142
+IP 158.160.115.142
 
 Frontend https://faizova.nomoreparties.co;
 
