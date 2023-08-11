@@ -76,8 +76,9 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: "https://api.faizova.nomoreparties.co/",
+  baseUrl: "https://api.faizova.nomoreparties.co",
   headers: {
+    authorization: localStorage.getItem('token'),
     "Content-Type": "application/json",
   },
 });
