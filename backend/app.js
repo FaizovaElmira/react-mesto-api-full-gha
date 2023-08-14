@@ -30,7 +30,7 @@ const limiter = rateLimit({
 app.use(limiter); // ПО промежуточного слоя для ограничения скорости
 
 app.use(cors({
-  origin: ['https://faizova.nomoreparties.co', 'http://faizova.nomoreparties.co', 'http://localhost:3000'],
+  origin: ['https://faizova.nomoreparties.co', 'http://faizova.nomoreparties.co'],
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 })); // Промежуточное ПО CORS
