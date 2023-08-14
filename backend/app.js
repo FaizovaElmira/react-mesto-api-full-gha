@@ -31,6 +31,8 @@ app.use(limiter); // ПО промежуточного слоя для огра�
 
 app.use(cors({
   origin: ['https://faizova.nomoreparties.co', 'http://faizova.nomoreparties.co', 'http://localhost:3000'],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 })); // Промежуточное ПО CORS
 
 app.use(express.static(path.join(__dirname, 'public')));
