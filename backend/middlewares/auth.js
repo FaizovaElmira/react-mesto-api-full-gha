@@ -14,16 +14,15 @@ const authMiddleware = (req, res, next) => {
     throw new UnauthorizedError('Необходима авторизация');
   }
 
-  const token = authorization.replace('Bearer ', ''); // Extract the token from the header
+  const token = authorization.replace('Bearer ', '');
 
   try {
     const secret = NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret';
     const payload = jwt.verify(token, secret);
     req.user = payload;
-    next();
-    return null;
+    return next();
   } catch (err) {
-    return next(new UnauthorizedError('Ошибка авторизации: не получилось верифицировать токен'));
+    return next(new UnauthorizedError('Ошибка авторизации'));
   }
 };
 

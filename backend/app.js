@@ -69,11 +69,11 @@ app.get('/crash-test', () => {
 (async () => {
   try {
     await mongoose.connect(DB_URL, { useNewUrlParser: true });
-    console.log('Connected to MongoDB');
+    console.log('Подключен к MongoDB');
     app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
+      console.log(`Сервер работает на порту ${PORT}`);
     });
   } catch (error) {
-    console.error('Error connecting to MongoDB:', error);
+    console.error('Ошибка подключения к MongoDB:', error);
   }
 })();
